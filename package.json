@@ -3,12 +3,15 @@
     "version": "0.0.5",
     "scripts": {
         "start": "node ./bin/start",
+        "dev": "nodemon ./bin/start",
         "build": "webpack --color --config webpack.config.js",
         "deploy": "npm run build && node writeHtml.js"
     },
     "dependencies": {
         "@babel/core": "^7.3.4",
         "@babel/preset-env": "^7.3.4",
+        "@polkadot/api": "^2.7.1",
+        "@polkadot/rpc-provider": "^2.7.1",
         "antd": "^4.4.2",
         "classnames": "^2.2.6",
         "diff": "^4.0.2",

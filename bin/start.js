@@ -17,7 +17,7 @@ const watching = compiler.watch({
   aggregateTimeout: 300,
   poll: undefined
 }, (err, stats) => {
-  //  console.log(stats)
+  // console.log(stats)
 })
 
 var port = normalizePort(process.env.PORT || '3001');

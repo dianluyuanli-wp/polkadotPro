@@ -21,11 +21,7 @@ const SHOW_TYPE = {
 
 const FormItem = Form.Item;
 
-const BLOCK_LENGTH = 5;
-
 const ACCOUNT_JSON = {"address":"12HR77csAyeej9PrGNu7mykNfaiShU5PLvJdGNzZWG7dEN1Z","encoded":"UgbG4dup0sgb7K7rMMnajy0UAsR6Jm6Z9AB8ECEyM1AAgAAAAQAAAAgAAABFPx2JAeE6M1efsHbQfqkwWZLqxr2NeoBMsDCr4BKT/KQZmVCZjNd8Uo//xtYTpidx3hniZvhJ3tgnHEIO+9c2tQyIwpUA/SvxeSpGIYPBSwKPVHcYWvFdroH+LVykXejfKL/TBfQgMyZP3xvO5MdYnylrdan8mNWZL4ptorr4ynx8fy2PSJxyPx6k8dfioymDj6j2rTyMNxzL+9w4","encoding":{"content":['pkcs8', 'sr25519' as KeypairType],"type":["scrypt","xsalsa20-poly1305"],"version":"3"},"meta":{"genesisHash":"0x91b171bb158e2d3848fa23a9f1c25182fb8e20313b2c1eb49219da7a70ce90c3","name":"xiao","tags":[],"whenCreated":1607046145213}};
-
-const OFFICAL_END_POINT = 'wss://rpc.polkadot.io';
 
 const senderAddress = '12HR77csAyeej9PrGNu7mykNfaiShU5PLvJdGNzZWG7dEN1Z';
 const receiverAdd = '13DrGJTWv6wwJe9z9FHtoPRTYxYWyWepfVBDuPY4RDmANj9R';
@@ -34,34 +30,7 @@ const ContentDiff: FC = function() {
 
     //let xxx;
     const [passWord, setPass] = useState('');
-    //const globalStore = useStores();
-    //const appStore = useAppStore();
     const { api, hasInit } = useStores();
-    //console.log(globalStore, 'vdfewf');
-    //const { api, hasInit } = globalStore.appStore; //appStore;
-    //const provider = new WsProvider(OFFICAL_END_POINT);
-    //let api = new ApiPromise({ provider });
-    //const stakingOverview = useCall(api.derive.staking.overview);
-
-    // useEffect(() => {
-    //     console.log('begin');
-    //     async function initApi() {
-    //         const provider = new WsProvider(OFFICAL_END_POINT);
-    //         api = await ApiPromise.create({
-    //             provider
-    //         });
-    //         //  keyring初始化
-    //         keyring.loadAll({ 
-    //             genesisHash: api.genesisHash,
-    //             ss58Format: 0,
-    //             store: undefined,
-    //             type: 'ed25519'
-    //         }, [])
-    //         setInitSta(true);
-    //         console.log(api, 'init complete!');
-    //     }
-    //     initApi();
-    // }, []);
 
     const [blockNum, setBNum] = useState(0);
 

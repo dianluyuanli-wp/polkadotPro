@@ -1,10 +1,11 @@
 const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const tsImportPluginFactory = require("ts-import-plugin");
 
 module.exports = {
     context: path.resolve(__dirname),
     entry: {
-        app: ['./entry/index.js']
+        app: ['./entry/index.tsx']
     },
     output: {
         filename: '[name].bundle.js',
@@ -34,58 +35,71 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(js|jsx)$/,
+                test: /\.(css|scss)$/,
                 exclude: /node_modules/,
                 use: [
+                    'isomorphic-style-loader',
                     {
-                        loader: 'babel-loader',
-                        query: {
-                            presets: [
-                                '@babel/react', 
-                                '@babel/preset-env'
-                            ],
-                            plugins: [
-                                //  给antd做按需加载
-                                ["import", {
-                                    "libraryName": "antd",
-                                    //"libraryDirectory": "es",
-                                    "style": 'css' // `style: true` 会加载 less 文件
-                                }],
-                                //  这个拿来做注入代码优化的
-                                ['@babel/plugin-transform-runtime',
-                                {
-                                    "corejs": false,
-                                    "helpers": true,
-                                    "regenerator": true,
-                                    "useESModules": false
-                                }],
-                                //  支持类写法
-                                "@babel/plugin-proposal-class-properties",
-                                '@babel/plugin-proposal-optional-chaining'
-                            ]
+                        loader: 'typings-for-css-modules-loader',
+                        options: {
+                            modules: true,
+                            namedExport: true
                         }
                     }
                 ]
             },
             {
                 //  专门处理antd的css样式
-                test: /\.css$/,
+                test: /\.(less)$/,
                 include: /node_modules/,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    'css-loader'
+                    'css-loader',
+                    {
+                        loader: "less-loader",
+                        options: {
+                            lessOptions: {
+                                javascriptEnabled: true
+                            }
+                        }
+                    }
                 ],
             },
             {
-                //  正常的css使用css module
-                test: /\.css$/,
-                exclude: /node_modules/,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    'css-loader?modules&localIdentName=[name]__[local]--[hash:base64:5]'
+                test: /\.tsx?$/,
+                loader: "awesome-typescript-loader",
+                options: {
+                  useCache: true,
+                  useBabel: false, // !important!
+                  getCustomTransformers: () => ({
+                    before: [tsImportPluginFactory({
+                      libraryName: 'antd',
+                      libraryDirectory: 'lib',
+                      style: true
+                    })]
+                  }),
+                },
+                exclude: [
+                    /node_modules/
                 ]
             }
         ]
+    },
+    resolve: {
+        extensions: [
+            '.ts', '.tsx', '.js', '.json'
+        ],
+        alias: {
+            // "@xxxx/util": path.resolve(__dirname, 'utils'),
+            // "@polkadot/react-api": path.resolve(__dirname, "package/react-api/src"),
+            // "@polkadot/react-api/*": path.resolve(__dirname, "package/react-api/src/*"),
+            // "@polkadot/react-components": path.resolve(__dirname, "package/react-components/src"),
+            // "@polkadot/react-components/*": path.resolve(__dirname, "package/react-components/src/*"),
+            // "@polkadot/react-hooks": path.resolve(__dirname, "package/react-hooks/src"),
+            // "@polkadot/react-hooks/*": path.resolve(__dirname, "package/react-hooks/src/*"),
+            "@utils": path.resolve(__dirname, "utils"),
+            "@constants": path.resolve(__dirname, "constants")
+          },
     },
     mode:"development",
     //mode:"production",

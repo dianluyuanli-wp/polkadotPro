@@ -1,0 +1,24 @@
+{
+    "compilerOptions": {
+      //"module": "commonjs",
+      "noImplicitAny": true, 
+      "outDir": "./dist/",
+      "target": "es6",
+      "jsx": "react",
+      "sourceMap": true,
+      "allowSyntheticDefaultImports": true,
+      "moduleResolution": "node",
+      "experimentalDecorators": true,
+      "baseUrl": "./",
+      "paths": {
+          "@utils/*": ["utils/*"],
+          "@constants/*": ["constants/*"]
+      },
+    },
+    "include": [
+        "./entry/**/*",
+        "./types/declaration.d.ts",
+        "./types/xiaohuli-package/*"
+    ],
+    "exclude": [ "node_modules" ]
+  }
